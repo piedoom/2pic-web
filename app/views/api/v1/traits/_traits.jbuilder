@@ -1,0 +1,1 @@
+json.array! traits, partial: 'api/v1/traits/trait', as: :trait
