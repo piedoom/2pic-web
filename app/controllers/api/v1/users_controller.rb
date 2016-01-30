@@ -14,8 +14,8 @@ class Api::V1::UsersController < ApplicationController
 
   # POST /users
   def create
-    @user = User.new(user_params)
-
+    @user = User.new(params.require(:user).permit(:username, :photo))
+    @user.key = request.headers[:key]
     if @user.save
       render 'api/v1/users/create'
     else
