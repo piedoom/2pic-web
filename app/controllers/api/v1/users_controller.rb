@@ -4,6 +4,16 @@ class Api::V1::UsersController < ApplicationController
   # GET /users/1
   # freely visible to all
   def show
+
+  end
+
+  def registration_check
+    @user = current_user
+    if @user
+      render 'api/v1/users/show'
+    else
+      render :json => {error: "not found"}.to_json, status: 404
+    end
   end
 
   # GET /users/new
@@ -16,6 +26,11 @@ class Api::V1::UsersController < ApplicationController
   def create
     @user = User.new(params.require(:user).permit(:username, :photo))
     @user.key = request.headers[:key]
+
+    #####
+    
+    #####
+
     if @user.save
       render 'api/v1/users/create'
     else
