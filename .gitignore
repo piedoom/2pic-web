@@ -12,3 +12,4 @@
 !/log/.keep
 /tmp
 *.pem
+/public/system/photos/*

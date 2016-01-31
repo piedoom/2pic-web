@@ -1,4 +1,4 @@
-class Api::V1::TraitsController < ApplicationController
+class Api::V1::TraitsController < ApiController
   before_action :set_trait, only: [:show, :update, :destroy]
 
   # get traits of a selected user

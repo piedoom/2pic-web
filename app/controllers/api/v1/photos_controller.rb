@@ -1,4 +1,4 @@
-class Api::V1::PhotosController < ApplicationController
+class Api::V1::PhotosController < ApiController
   before_action :set_photo, only: [:show, :edit, :update, :destroy]
 
   # GET /photos
@@ -10,6 +10,7 @@ class Api::V1::PhotosController < ApplicationController
   # GET /photos/1
   # GET /photos/1.json
   def show
+
   end
 
   # GET /photos/new
@@ -23,31 +24,40 @@ class Api::V1::PhotosController < ApplicationController
 
   # POST /photos
   # POST /photos.json
-  def create
-    @photo = Photo.new(photo_params)
 
-    respond_to do |format|
-      if @photo.save
-        format.html { redirect_to @photo, notice: 'Photo was successfully created.' }
-        format.json { render :show, status: :created, location: @photo }
-      else
-        format.html { render :new }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
+  # POST /api/v1/photos?target=:id
+  def create
+
+    @photo = Photo.new
+
+    # set the things of our photo since params arent gonna work
+    @photo.photo = params[:photo]
+
+    # set the target user (which is just player 2)
+    @photo.target_user_id = params[:target_user_id]
+    # set player one
+    @photo.user = current_user
+
+    if @photo.save
+      # APNS.send_notification(@match.target_user.key, alert: 'You\'ve been challenged.', other: {type: 'match', id: @match.user.id } )
+
+      thumb = URI.join(request.url, @photo.photo.url(:thumb))
+      medium = URI.join(request.url, @photo.photo.url(:medium))
+
+      APNS.send_notification("#{@photo.target_user.key}", alert: 'Is this you?', other: { type: 'image', url: "#{medium}", thumb: "#{thumb}" } )
+      render :show, status: :created
+    else
+      render json: @photo.errors, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /photos/1
   # PATCH/PUT /photos/1.json
   def update
-    respond_to do |format|
-      if @photo.update(photo_params)
-        format.html { redirect_to @photo, notice: 'Photo was successfully updated.' }
-        format.json { render :show, status: :ok, location: @photo }
-      else
-        format.html { render :edit }
-        format.json { render json: @photo.errors, status: :unprocessable_entity }
-      end
+    if @photo.update(photo_params)
+      render :show, status: :ok
+    else
+      render json: @photo.errors, status: :unprocessable_entity
     end
   end
 
@@ -69,6 +79,6 @@ class Api::V1::PhotosController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def photo_params
-      params.require(:photo).permit(:user_id, :photo, :target_user_id)
+      params.require(:photo).permit(:photo, :target_user_id)
     end
 end

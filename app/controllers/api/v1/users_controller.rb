@@ -1,10 +1,18 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < ApiController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users/1
   # freely visible to all
   def show
 
+  end
+
+  def check_valid
+    target = User.find(params[:target_user_id])
+    user = current_user
+    response = (params[:response] == "1")
+    APNS.send_notification(target.key, alert: 'You\'ve received a response.', other: { type: 'response', response: response } )
+    render :json => {status: "ok"}.to_json, status: 200
   end
 
   def registration_check
@@ -28,7 +36,7 @@ class Api::V1::UsersController < ApplicationController
     @user.key = request.headers[:key]
 
     #####
-    
+
     #####
 
     if @user.save

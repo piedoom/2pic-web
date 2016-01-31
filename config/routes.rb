@@ -1,9 +1,13 @@
 Rails.application.routes.draw do
 
+  get 'pages/index'
+  root 'pages#index'
+
   namespace :api do
     namespace :v1 do
       resources :users
       get 'me' => 'users#registration_check'
+      post 'response' => 'users#check_valid'
       resources :traits
       resources :photos
       resources :matches, :except => [:edit, :index, :new]

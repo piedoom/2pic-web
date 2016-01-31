@@ -1,4 +1,4 @@
-class Api::V1::MatchesController < ApplicationController
+class Api::V1::MatchesController < ApiController
   before_action :set_match, only: [:show, :update, :destroy]
 
   # GET /matches/1
@@ -6,15 +6,15 @@ class Api::V1::MatchesController < ApplicationController
   def show
   end
 
-  # POST /matches
-  # send auth header
-  # send opposing user id
+  # since the users have unique integer ids, we will let the device with the lowest
+  # value ID make the post.  We will then send notifications to both devices
   def create
     @match = Match.new(match_params)
     @match.user = current_user
 
     if @match.save
-      APNS.send_notification(User.find(@match.target_user_id).key, alert: 'You\'ve been challenged.')
+      APNS.send_notification(@match.target_user.key, alert: 'You\'ve been challenged.', other: {type: 'match', id: @match.user.id } )
+      APNS.send_notification(@match.user.key, alert: 'You\'ve been challenged.', other: {type: 'match', id: @match.target_user.id } )
       render :show, status: :created
     else
       render json: @match.errors, status: :unprocessable_entity
