@@ -13,4 +13,23 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require lightbox
 //= require_tree .
+
+var ready;
+ready = function() {
+
+    function reload(){
+        $('.vertwrapper').css('margin-top',$(window).height() / 2 - $('.vertwrapper').height() / 2 );
+    }
+
+    reload();
+
+    $(window).resize(function(){
+        reload();
+    });
+
+};
+
+$(document).ready(ready);
+$(document).on('page:load', ready);

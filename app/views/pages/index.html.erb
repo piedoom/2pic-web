@@ -1,0 +1,20 @@
+<div class="fullscreen-bg">
+  <video loop muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video">
+    <source src="<%= image_url 'gabe_desktop.mp4' %>" type="video/mp4">
+  </video>
+</div>
+
+<div class="vertwrapper">
+
+  <h1>Find new friends.</h1>
+  <br/>
+  <br/>
+  <br/>
+  <div class="login">
+    <% @user = User.new %>
+    <%= form_tag log_in_url do %>
+      <%= text_field_tag "username", nil, placeholder: 'username' %>
+    <% end %>
+
+  </div>
+</div>

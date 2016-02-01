@@ -10,6 +10,153 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require lightbox
  *= require_tree .
  *= require_self
  */
+
+body{
+    margin: 0;
+    background: #F5F5FF;
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+}
+
+.fullscreen-bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    z-index: -100;
+}
+
+.fullscreen-bg__video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+    .fullscreen-bg__video {
+        height: 300%;
+        top: -100%;
+    }
+}
+
+@media (max-aspect-ratio: 16/9) {
+    .fullscreen-bg__video {
+        width: 300%;
+        left: -100%;
+    }
+}
+
+nav{
+    background: #6e3ac8;
+    width: 100%;
+}
+
+.videoclip{
+    width: 148px;
+    overflow: hidden;
+    margin: 0 auto;
+    padding: 16px 0;
+}
+
+.vertwrapper{
+    max-width: 600px;
+    margin: 24px auto;
+    min-height: 300px;
+}
+
+h1{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+    font-size: 72px;
+    color: white;
+    display: block;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.overlay{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(98,53,196,0.75);
+}
+
+input[type=text]{
+    background: none;
+    font-size: 32px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    border-bottom: white 1px solid;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 8px 0;
+
+}
+
+::-webkit-input-placeholder{
+    color: white;
+}
+
+.wrapper{
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.wrapper .photo{
+    width: 33.33%;
+}
+
+.wrapper .photo img{
+    width: 100%;
+    display: block;
+}
+
+.photo{
+    float: left;
+}
+
+.overlay{
+    transition: all 0.2s ease;
+}
+
+.wrapper .photo .overlay:hover{
+    opacity: 0;
+}
+
+.photo{
+    position: relative;
+}
+
+.score{
+    text-align: center;
+    color: lightgrey;
+    font-weight: 200;
+    font-size: 24px;
+    position: relative;
+    top: -36px;
+}
+
+.purple{
+    background: #674dcc;
+    width: 100%;
+    overflow: hidden;
+
+}

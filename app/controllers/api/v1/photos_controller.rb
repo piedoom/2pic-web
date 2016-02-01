@@ -44,7 +44,7 @@ class Api::V1::PhotosController < ApiController
       thumb = URI.join(request.url, @photo.photo.url(:thumb))
       medium = URI.join(request.url, @photo.photo.url(:medium))
 
-      APNS.send_notification("#{@photo.target_user.key}", alert: 'Is this you?', other: { type: 'image', url: "#{medium}", thumb: "#{thumb}" } )
+      APNS.send_notification("#{@photo.target_user.key}", alert: 'Is this you?', other: { type: 'image', medium: "#{medium}", thumb: "#{thumb}" } )
       render :show, status: :created
     else
       render json: @photo.errors, status: :unprocessable_entity

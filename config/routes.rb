@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
   get 'pages/index'
   root 'pages#index'
+  get 'users/:id' => "users#show"
+  post 'log_in' => "users#log_in"
 
   namespace :api do
     namespace :v1 do

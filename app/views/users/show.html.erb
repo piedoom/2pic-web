@@ -1,0 +1,33 @@
+<%# welcome to <br> hell %>
+
+
+<div class="purple">
+<div class="wrapper">
+  <h1><%= @user.username %></h1>
+  <div class="score" >
+    score: <%= @user.score %>
+  </div>
+  <br>
+</div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+  <div class="wrapper">
+    <% @photos.each do |photo| %>
+      <a href="<%= photo.photo.url(:medium) %>" data-lightbox="<%= photo.photo.url(:medium) %>" data-title="<%= photo.created_at %>">
+        <div class="photo">
+          <div class="overlay"></div>
+
+            <%= image_tag photo.photo.url(:thumb) %>
+
+        </div>
+      </a>
+    <% end %>
+
+  </div>
+

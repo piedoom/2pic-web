@@ -2,13 +2,25 @@
 <html>
 <head>
   <title>App</title>
+  <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,100' rel='stylesheet' type='text/css'>
+
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
   <%= csrf_meta_tags %>
 </head>
 <body>
 
+<nav>
+  <%= link_to root_path do %>
+  <div class="videoclip">
+    <%= video_tag 'logo.mp4', autoplay: true, controls: false, width: 150 %>
+  </div>
+  <% end %>
+</nav>
+
 <%= yield %>
 
+</body>
 </body>
 </html>
